@@ -9,7 +9,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=fabularootuser
       - MONGO_INITDB_ROOT_PASSWORD=fabularootpass
     ports:
-      - '27017-27019:27017-27019'
+      - '27017:27017'
     volumes:
       - ../migrations/mongo/mongo-db-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - fabula-db-volume:/data/db
