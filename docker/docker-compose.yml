@@ -11,7 +11,7 @@ services:
     ports:
       - '27017-27019:27017-27019'
     volumes:
-      - ./mongo/mongo-db-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ../migrations/mongo/mongo-db-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - fabula-db-volume:/data/db
 
 volumes:
