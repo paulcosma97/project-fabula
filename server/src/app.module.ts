@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (_: ConfigService) => ({
-        uri: 'mongodb://fabulauser:fabulapass@localhost:27017/fabuladb',
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-      }),
-      inject: [ConfigService],
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      host: process.env.FABULA_DB_HOST ?? 'localhost',
+      port: process.env.FABULA_DB_PORT ? +process.env.FABULA_DB_PORT : 27017,
+      database: process.env.FABULA_DB_NAME ?? 'fabuladb',
+      username: process.env.FABULA_DB_USERNAME ?? 'fabulauser',
+      password: process.env.FABULA_DB_PASSWORD ?? 'fabulapass',
     }),
     SharedModule,
   ],
