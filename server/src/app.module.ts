@@ -1,25 +1,34 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreModule } from './core/core.module';
+import configuration from './shared/config/config-loader';
+import { DatabaseConfiguration } from './shared/types/config.types';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      host: process.env.FABULA_DB_HOST ?? 'localhost',
-      port: process.env.FABULA_DB_PORT ? +process.env.FABULA_DB_PORT : 27017,
-      database: process.env.FABULA_DB_NAME ?? 'fabuladb',
-      username: process.env.FABULA_DB_USERNAME ?? 'fabulauser',
-      password: process.env.FABULA_DB_PASSWORD ?? 'fabulapass',
-      useUnifiedTopology: true
-    }),
-    SharedModule,
-    CoreModule
-  ],
-  controllers: [],
-  providers: [],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+        TypeOrmModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => {
+                const db = configService.get<DatabaseConfiguration>('database');
+
+                return {
+                    type: 'mongodb',
+                    useUnifiedTopology: true,
+                    host: db.host,
+                    port: db.port,
+                    database: db.name,
+                    username: db.user,
+                    password: db.password,
+                };
+            },
+        }),
+        SharedModule,
+        CoreModule,
+    ],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {}

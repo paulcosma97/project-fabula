@@ -1,3 +1,3 @@
 export interface GameState {
-  timestamp: string;
+    timestamp: string;
 }

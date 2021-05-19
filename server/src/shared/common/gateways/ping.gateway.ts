@@ -1,20 +1,16 @@
-import {
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer,
-  WsResponse,
-} from '@nestjs/websockets';
-import { Observable, of } from 'rxjs';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer, WsResponse } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
 @WebSocketGateway()
 export class PingGateway {
-  @WebSocketServer()
-  server: Server;
+    @WebSocketServer()
+    server: Server;
 
-  @SubscribeMessage('Client: Ping')
-  findAll(@MessageBody() data: any): Observable<WsResponse<string>> {
-    return of({ event: 'ping', data: 'ok:' + data });
-  }
+    @SubscribeMessage('[Client] Ping')
+    async findAll(): Promise<WsResponse<void>> {
+        return {
+            event: '[Server] Pong',
+            data: null,
+        };
+    }
 }

@@ -1,0 +1,8 @@
+database:
+  host: 'localhost'
+  port: 27017
+  name: 'fabuladb'
+  user: 'fabulauser'
+  password: 'fabulapass'
+http:
+  port: 3000
