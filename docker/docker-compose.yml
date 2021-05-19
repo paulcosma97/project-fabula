@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  fabula-db:
+    image: 'mongo'
+    container_name: 'fabula-db'
+    environment:
+      - MONGO_INITDB_DATABASE=fabuladb
+      - MONGO_INITDB_ROOT_USERNAME=fabularootuser
+      - MONGO_INITDB_ROOT_PASSWORD=fabularootpass
+    ports:
+      - '27017:27017'
+    volumes:
+      - ../migrations/mongo/mongo-db-init.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - fabula-db-volume:/data/db
+
+volumes:
+  fabula-db-volume:
