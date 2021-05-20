@@ -361,7 +361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	/**
-	 * Colorize log arguments if enabled.
+	 * Colorize misc arguments if enabled.
 	 *
 	 * @api public
 	 */
@@ -402,15 +402,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * Invokes `console.log()` when available.
-	 * No-op when `console.log` is not a "function".
+	 * Invokes `console.misc()` when available.
+	 * No-op when `console.misc` is not a "function".
 	 *
 	 * @api public
 	 */
 
 	function log() {
 	  // this hackery is required for IE8/9, where
-	  // the `console.log` function doesn't have 'apply'
+	  // the `console.misc` function doesn't have 'apply'
 	  return 'object' === typeof console
 	    && console.log
 	    && Function.prototype.apply.call(console.log, console, arguments);
@@ -704,7 +704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var prevColor = 0;
 
 	/**
-	 * Previous log timestamp.
+	 * Previous misc timestamp.
 	 */
 
 	var prevTime;
@@ -1497,7 +1497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	/**
-	 * Colorize log arguments if enabled.
+	 * Colorize misc arguments if enabled.
 	 *
 	 * @api public
 	 */
@@ -1538,15 +1538,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * Invokes `console.log()` when available.
-	 * No-op when `console.log` is not a "function".
+	 * Invokes `console.misc()` when available.
+	 * No-op when `console.misc` is not a "function".
 	 *
 	 * @api public
 	 */
 
 	function log() {
 	  // this hackery is required for IE8/9, where
-	  // the `console.log` function doesn't have 'apply'
+	  // the `console.misc` function doesn't have 'apply'
 	  return 'object' === typeof console
 	    && console.log
 	    && Function.prototype.apply.call(console.log, console, arguments);
@@ -1649,7 +1649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var prevColor = 0;
 
 	/**
-	 * Previous log timestamp.
+	 * Previous misc timestamp.
 	 */
 
 	var prevTime;

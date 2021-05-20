@@ -2,24 +2,42 @@
   <head>
     <script src="socket.io.js"></script>
     <script>
-      const socket = io('http://localhost:3000');
-      socket.on('connect', function() {
-        console.log('Connected');
+      // const socket = io('http://localhost:3000');
+      // socket.on('connect', function() {
+      //   console.log('Connected');
+      //
+      //   socket.emit('[Client] Ping');
+      //
+      //   socket.emit('ping', { test: 'test' });
+      //   socket.emit('identity', 0, response =>
+      //     console.log('Identity:', response),
+      //   );
+      // });
+      // socket.on('ping', function(data) {
+      //   console.log('ping', data);
+      // });
+      // socket.on('exception', function(data) {
+      //   console.log('ping', data);
+      // });
+      // socket.on('disconnect', function() {
+      //   console.log('Disconnected');
+      // });
 
-        socket.emit('ping', { test: 'test' });
-        socket.emit('identity', 0, response =>
-          console.log('Identity:', response),
-        );
-      });
-      socket.on('ping', function(data) {
-        console.log('ping', data);
-      });
-      socket.on('exception', function(data) {
-        console.log('ping', data);
-      });
-      socket.on('disconnect', function() {
-        console.log('Disconnected');
-      });
+      const socket = new WebSocket('ws://localhost:3000');
+      socket.onopen = () => {
+          console.log('Connected.')
+          socket.send(JSON.stringify({event: '[Client] Ping', data: 'cacat'}))
+          console.time('ms')
+      }
+
+
+      socket.onmessage = async (event) => {
+          console.timeEnd('ms')
+          console.log('Got message', JSON.parse(event.data))
+          await new Promise(r => setTimeout(r, 500));
+          socket.send(JSON.stringify({event: '[Client] Ping', data: 'cacat'}))
+            console.time('ms')
+      }
     </script>
   </head>
 
