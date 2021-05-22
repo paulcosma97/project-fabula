@@ -1,10 +1,12 @@
-import { Float } from '../../../shared/types/base.types';
+import { Float } from './base.types';
 
 export default class Vector {
     constructor(public x: Float, public y: Float) {}
+
     public static of(x: Float, y: Float): Vector {
         return new Vector(x, y);
     }
+
     public static ofTuple(tuple: [Float, Float]) {
         return this.of(...tuple);
     }

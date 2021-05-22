@@ -1,14 +1,15 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
+import { MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
-import { Socket } from 'net';
+import { WsResponses } from '../../types/ws/ws-responses.enum';
+import { WsSubscriptions } from '../../types/ws/ws-subscriptions.enum';
 
 @WebSocketGateway()
 export class PingGateway {
-    @SubscribeMessage('[Client] Ping')
-    async findAll(@MessageBody() body: any, @ConnectedSocket() socket: Socket): Promise<WsResponse<null>> {
+    @SubscribeMessage(WsSubscriptions.PING)
+    async findAll(@MessageBody() body: any): Promise<WsResponse<null>> {
         Logger.log(`Got message from client ${JSON.stringify(body)}`, 'PingGateway');
         return {
-            event: '[Server] Pong',
+            event: WsResponses.PING,
             data: null,
         };
     }

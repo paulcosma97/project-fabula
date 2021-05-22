@@ -6,3 +6,5 @@ export interface Account extends Entity {
     password: string;
     characterIds: FK<Character[]>;
 }
+
+export const AccountCollection = 'account';
