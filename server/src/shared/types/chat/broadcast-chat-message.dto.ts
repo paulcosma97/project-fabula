@@ -1,14 +1,15 @@
 import { ChatMessageDto } from './chat-message.dto';
-import { Point } from '../math.types';
+import Vector from '../math.types';
+import { BroadcastRange } from './broadcast-range.enum';
 
 export default class BroadcastChatMessageDto extends ChatMessageDto {
     public static TYPE_SELECTOR = 'BroadcastChatMessageDto';
     readonly type = BroadcastChatMessageDto.TYPE_SELECTOR;
 
-    origin: Point<string>;
-    range: string;
+    origin: Vector;
+    range: BroadcastRange;
 
-    constructor(values: Partial<BroadcastChatMessageDto>) {
+    constructor(values: Omit<BroadcastChatMessageDto, 'type'>) {
         super(values);
         this.origin = values.origin;
         this.range = values.range;

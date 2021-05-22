@@ -1,25 +1,26 @@
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
-import { WsSubscriptionsEnum } from '../../types/ws/ws-subscriptions.enum';
-import { WsResponsesEnum } from '../../types/ws/ws-responses.enum';
+import { WsSubscriptions } from '../../types/ws/ws-subscriptions.enum';
+import { WsResponses } from '../../types/ws/ws-responses.enum';
 import { RegisterDto } from '../../types/auth/register.dto';
 import { LoginDto } from '../../types/auth/login.dto';
 import { Socket } from 'net';
+import { AuthService } from '../services/auth.service';
 
 @WebSocketGateway()
 export class AuthGateway {
-    @SubscribeMessage(WsSubscriptionsEnum.REGISTER)
-    async register(@MessageBody() body: RegisterDto): Promise<WsResponse<void>> {
-        return {
-            event: WsResponsesEnum.REGISTER,
-            data: null,
-        };
+    constructor(private authService: AuthService) {}
+
+    @SubscribeMessage(WsSubscriptions.REGISTER)
+    async register(@MessageBody() body: RegisterDto): Promise<void> {
+        await this.authService.register(body);
     }
 
-    @SubscribeMessage(WsSubscriptionsEnum.LOGIN)
-    async login(@MessageBody() body: LoginDto, @ConnectedSocket() client: Socket): Promise<WsResponse<void>> {
+    @SubscribeMessage(WsSubscriptions.LOGIN)
+    async login(@MessageBody() body: LoginDto, @ConnectedSocket() client: Socket): Promise<WsResponse<boolean>> {
+        const isLoggedIn = await this.authService.login(body);
         return {
-            event: WsResponsesEnum.LOGIN,
-            data: null,
+            event: WsResponses.LOGIN,
+            data: isLoggedIn,
         };
     }
 }

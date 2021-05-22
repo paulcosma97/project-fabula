@@ -4,11 +4,13 @@ import websocketStoreFactory from './config/websocket-store.factory';
 import dbFactory from './common/persistance/db.factory';
 import { AuthGateway } from './common/gateways/auth.gateway';
 import { ChatGateway } from './common/gateways/chat.gateway';
+import { AuthService } from './common/services/auth.service';
+import { ChatService } from './common/services/chat.service';
 
 @Module({
     imports: [],
     controllers: [],
-    providers: [websocketStoreFactory, dbFactory, PingGateway, AuthGateway, ChatGateway],
+    providers: [websocketStoreFactory, dbFactory, PingGateway, AuthGateway, ChatGateway, AuthService, ChatService],
     exports: [websocketStoreFactory, dbFactory],
 })
 export class SharedModule {}

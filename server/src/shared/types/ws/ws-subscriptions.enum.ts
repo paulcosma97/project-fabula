@@ -1,4 +1,4 @@
-export enum WsSubscriptionsEnum {
+export enum WsSubscriptions {
     PING = '[Client] Ping',
     REGISTER = '[Client] Register',
     LOGIN = '[Client] Login',

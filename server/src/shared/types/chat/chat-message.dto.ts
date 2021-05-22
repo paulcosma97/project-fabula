@@ -4,7 +4,7 @@ export class ChatMessageDto {
 
     message: string;
 
-    constructor(values: Partial<ChatMessageDto>) {
+    constructor(values: Omit<ChatMessageDto, 'type'>) {
         this.message = values.message;
     }
 }

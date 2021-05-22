@@ -4,10 +4,10 @@ export default class PrivateChatMessageDto extends ChatMessageDto {
     public static TYPE_SELECTOR = 'PrivateChatMessageDto';
     readonly type = PrivateChatMessageDto.TYPE_SELECTOR;
 
-    account: string;
+    character: string;
 
-    constructor(values: Partial<PrivateChatMessageDto>) {
+    constructor(values: Omit<PrivateChatMessageDto, 'type'>) {
         super(values);
-        this.account = values.account;
+        this.character = values.character;
     }
 }

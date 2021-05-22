@@ -1,23 +1,22 @@
 import WebsocketStore from '../../types/websocket-store.type';
 import { Injectable } from '@nestjs/common';
-import { PlayerState } from '../../types/gamestate';
-import { Seconds } from '../../types/base.types';
+import { FK } from '../persistance/db.types';
+import Character from '../../../core/models/character.model';
+import WebSocket from 'ws';
 
 @Injectable()
 export default class WebSocketStoreImpl implements WebsocketStore {
-    private store = new Map<string, { value: PlayerState; ttlId: any }>();
+    private store = new Map<FK<Account>, WebSocket>();
 
-    async getState(id: string): Promise<PlayerState> {
-        return this.store.get(id)?.value;
+    async get(fk: FK<Character>): Promise<WebSocket | null> {
+        return this.store.get(fk) || null;
     }
 
-    async setState(id: string, state: PlayerState, ttl: Seconds): Promise<void> {
-        const existing = this.store.get(id);
+    async getAll(): Promise<WebSocket[]> {
+        return [...this.store.values()];
+    }
 
-        if (existing) {
-            clearTimeout(existing.ttlId);
-        }
-
-        this.store.set(id, { value: state, ttlId: setTimeout(() => this.store.delete(id), ttl * 1000) });
+    async set(fk: FK<Character>, socket: WebSocket): Promise<void> {
+        this.store.set(fk, socket);
     }
 }

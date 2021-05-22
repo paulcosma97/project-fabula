@@ -1,4 +1,4 @@
-export enum WsResponsesEnum {
+export enum WsResponses {
     PING = '[Server] Pong',
     REGISTER = '[Server] Register',
     LOGIN = '[Server] Login',
