@@ -1,10 +1,7 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import Unit from './unit.type';
+import { Account } from './account.model';
+import { FK } from '../../shared/common/persistance/db.types';
 
-@Entity()
-export default class Character /* = player */ {
-    @ObjectIdColumn()
-    id: ObjectID;
-
-    @Column()
-    name: string;
+export default interface Character /* = player */ extends Unit {
+    accountId: FK<Account>;
 }
