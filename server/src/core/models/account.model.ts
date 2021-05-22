@@ -1,16 +1,8 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import Character from './character.model';
+import { Entity, FK } from '../../shared/common/persistance/db.types';
 
-@Entity()
-export class Account {
-    @ObjectIdColumn()
-    id: ObjectID;
-
-    @Column()
+export interface Account extends Entity {
     email: string;
-
-    @Column()
     password: string;
-    //
-    // @Column()
-    // characters:
+    characterIds: FK<Character[]>;
 }
