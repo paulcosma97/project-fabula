@@ -1,7 +1,7 @@
-import { Entity, FK } from '../../shared/common/persistance/db.types';
+import { Entity, FK } from '../persistance/db.types';
 import EffectType from './embeds/effect-type.embed';
 import TargetType from './embeds/target-type.embed';
-import { Int, Meter, UInt } from '../../shared/types/base.types';
+import { Int, Meter, UInt } from '../../types/base.types';
 import Aura from './aura.model';
 
 export default interface Ability extends Entity {

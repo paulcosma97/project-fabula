@@ -1,4 +1,4 @@
-import { Timestamp, UInt } from '../../shared/types/base.types';
+import { Timestamp, UInt } from '../../types/base.types';
 import Aura from './aura.model';
 
 export class ActiveAura {

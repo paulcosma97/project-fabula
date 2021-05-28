@@ -1,5 +1,5 @@
 import Stats from './embeds/stats.embed';
-import { Entity } from '../../shared/common/persistance/db.types';
+import { Entity } from '../persistance/db.types';
 
 export enum AuraType {
     Harm,

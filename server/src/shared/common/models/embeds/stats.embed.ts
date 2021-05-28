@@ -1,4 +1,4 @@
-import { Float, Int, Percentage } from '../../../shared/types/base.types';
+import { Float, Int, Percentage } from '../../../types/base.types';
 
 export default class Stats {
     strength: Int;

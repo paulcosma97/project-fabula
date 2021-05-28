@@ -1,7 +1,7 @@
 import WebsocketStore from '../../types/websocket-store.type';
 import { Injectable } from '@nestjs/common';
 import { FK } from '../persistance/db.types';
-import Character from '../../../core/models/character.model';
+import Character from '../models/character.model';
 import WebSocket from 'ws';
 
 @Injectable()

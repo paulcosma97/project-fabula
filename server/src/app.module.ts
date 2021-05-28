@@ -1,11 +1,8 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
-import configuration from './shared/config/config-loader';
+import {Module} from '@nestjs/common';
+import {CoreModule} from './core/core.module';
 
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true, load: [configuration] }), SharedModule, CoreModule],
+    imports: [CoreModule],
     controllers: [],
     providers: [],
 })

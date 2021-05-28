@@ -1,6 +1,6 @@
 import Unit from './unit.type';
 import { Account } from './account.model';
-import { FK } from '../../shared/common/persistance/db.types';
+import { FK } from '../persistance/db.types';
 import Inventory from './embeds/inventory.embed';
 import Class from './embeds/class.embed';
 
