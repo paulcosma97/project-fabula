@@ -2,7 +2,7 @@
   <configuration default="false" name="E2E Tests" type="JavaScriptTestRunnerJest">
     <config-file value="$PROJECT_DIR$/server/test/jest-e2e.json" />
     <node-interpreter value="project" />
-    <node-options value="--inspect-brk" />
+    <node-options value="--inspect" />
     <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$" />
     <envs />

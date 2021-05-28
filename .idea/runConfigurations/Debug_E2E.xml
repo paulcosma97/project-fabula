@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Debug E2E" type="CompoundRunConfigurationType">
+    <toRun name="Attach" type="ChromiumRemoteDebugType" />
+    <toRun name="E2E Tests" type="JavaScriptTestRunnerJest" />
+    <method v="2" />
+  </configuration>
+</component>
