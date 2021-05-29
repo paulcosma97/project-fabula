@@ -30,4 +30,6 @@ jobs:
           cd server/
           yarn
       - name: Test server
-        run: yarn test:e2e
+        run: |
+          cd server/
+          yarn test:e2e
