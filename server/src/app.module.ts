@@ -1,8 +1,9 @@
-import {Module} from '@nestjs/common';
-import {CoreModule} from './core/core.module';
+import { Module } from '@nestjs/common';
+import { SharedModule } from './shared/shared.module';
+import { AccountModule } from './modules/account/account.module';
 
 @Module({
-    imports: [CoreModule],
+    imports: [SharedModule, AccountModule],
     controllers: [],
     providers: [],
 })

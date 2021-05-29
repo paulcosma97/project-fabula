@@ -5,5 +5,3 @@ export enum WsResponses {
     CHAT = '[Server] Chat',
     GAMESTATE = '[Server] GameState',
 }
-
-

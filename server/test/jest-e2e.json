@@ -6,5 +6,8 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "globalTeardown": "./utils/teardown.ts"
+  "globalSetup": "<rootDir>/utils/global-setup.ts",
+  "testTimeout": 3600000,
+  "maxWorkers": "80%",
+  "maxConcurrency": 15
 }

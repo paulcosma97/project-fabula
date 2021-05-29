@@ -1,4 +1,5 @@
 database:
+  provider: 'mongodb'
   host: 'localhost'
   port: 27017
   name: 'fabuladb'
