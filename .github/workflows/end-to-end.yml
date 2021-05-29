@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Environment Variables
+        run: env
+      - name: Print Working Directory
+        run: pwd
+      - name: Print Files
+        run: ls -al
+      - name: Print User
+        run: whoami
+      - name: Install server dependencies
+        run: |
+          npm install -g yarn
+          cd server/
+          yarn
+      - name: Test server
+        run: yarn test:e2e
