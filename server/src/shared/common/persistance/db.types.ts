@@ -1,7 +1,9 @@
 import { Db, ObjectId } from 'mongodb';
 
 export const DatabaseConnectionToken = 'DatabaseConnection';
-export type DatabaseConnection = Db;
+export interface DatabaseConnection extends Db {
+    close(): Promise<void>;
+}
 export type PK = ObjectId;
 export type FK<T> = T extends Array<any> ? PK[] : PK;
 export interface Entity {

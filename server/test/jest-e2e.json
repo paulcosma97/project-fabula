@@ -5,5 +5,9 @@
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
-  }
+  },
+  "globalSetup": "<rootDir>/utils/global-setup.ts",
+  "testTimeout": 3600000,
+  "maxWorkers": "80%",
+  "maxConcurrency": 15
 }

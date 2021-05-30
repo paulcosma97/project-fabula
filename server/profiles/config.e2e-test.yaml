@@ -1,5 +1,5 @@
 database:
-  provider: 'mongodb'
+  provider: 'inmemory-mongodb'
   host: 'localhost'
   port: 27017
   name: 'fabuladb'
