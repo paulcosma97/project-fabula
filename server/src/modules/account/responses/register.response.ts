@@ -9,13 +9,13 @@ export class RegisterSuccess extends FabulaMessage {
     public event = RegisterResponseEvents.RegisterSuccess;
 }
 
-export interface RegisterFailureData {
-    email?: string;
-    password?: string;
-    other?: string;
+export enum RegisterFailureReason {
+    EmailAlreadyExists = 0,
+    InvalidPassword = 1,
+    InvalidEmail = 2,
 }
 
-export class RegisterFailure extends FabulaDataMessage<RegisterFailureData> {
+export class RegisterFailure extends FabulaDataMessage<RegisterFailureReason> {
     public event = RegisterResponseEvents.RegisterFailure;
 }
 

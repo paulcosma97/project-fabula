@@ -5,15 +5,15 @@ export enum LoginResponseEvents {
     LoginFailure = '[Server] Login Failure',
 }
 
+export enum LoginFailureReason {
+    WrongEmailPasswordCombination = 0,
+}
+
 export class LoginSuccess extends FabulaMessage {
     public event = LoginResponseEvents.LoginSuccess;
 }
 
-export interface LoginFailureData {
-    reason: string;
-}
-
-export class LoginFailure extends FabulaDataMessage<LoginFailureData> {
+export class LoginFailure extends FabulaDataMessage<LoginFailureReason> {
     public event = LoginResponseEvents.LoginFailure;
 }
 

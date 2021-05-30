@@ -8,13 +8,13 @@ import { RegisterDto } from '../../../shared/types/auth/register.dto';
 import { Account, AccountCollection } from '../../../shared/common/models/account.model';
 import { LoginDto } from '../../../shared/types/auth/login.dto';
 import { Collection } from 'mongodb';
-import { RegisterFailure } from '../responses/register.response';
-import { LoginFailure } from '../responses/login.response';
+import { RegisterFailure, RegisterFailureReason } from '../responses/register.response';
+import { LoginFailure, LoginFailureReason } from '../responses/login.response';
 
 @Injectable()
 export class AccountService {
     private collection: Collection<Account>;
-    private defaultLoginFailure = new LoginFailure({ reason: 'Invalid email and password combination.' });
+    private defaultLoginFailure = new LoginFailure(LoginFailureReason.WrongEmailPasswordCombination);
 
     constructor(@Inject(DatabaseConnectionToken) dbConnection: DatabaseConnection) {
         this.collection = dbConnection.collection<Account>(AccountCollection);
@@ -26,9 +26,7 @@ export class AccountService {
         });
 
         if (accountWithSameEmail) {
-            throw new RegisterFailure({
-                email: 'Email address already exists.',
-            });
+            throw new RegisterFailure(RegisterFailureReason.EmailAlreadyExists);
         }
 
         const account = {

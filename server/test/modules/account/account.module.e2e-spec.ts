@@ -1,11 +1,14 @@
 import { AccountGateway } from '../../../src/modules/account/gateways/account.gateway';
 import { DemistifyGateway } from '../../utils/gateway.utils';
-import { RegisterResponseEvents } from '../../../src/modules/account/responses/register.response';
+import {
+    RegisterFailureReason,
+    RegisterResponseEvents,
+} from '../../../src/modules/account/responses/register.response';
 import { AccountModule } from '../../../src/modules/account/account.module';
 import { usingApp } from '../../utils/bootstrap';
 import { INestApplication } from '@nestjs/common';
 import { AccountService } from '../../../src/modules/account/services/account.service';
-import { LoginResponseEvents } from '../../../src/modules/account/responses/login.response';
+import { LoginFailureReason, LoginResponseEvents } from '../../../src/modules/account/responses/login.response';
 
 describe('Account Module', () => {
     const metadata = { imports: [AccountModule] };
@@ -41,7 +44,7 @@ describe('Account Module', () => {
                 });
 
                 expect(result).toHaveProperty('event', RegisterResponseEvents.RegisterFailure);
-                expect(result).toHaveProperty('data.email');
+                expect(result).toHaveProperty('data', RegisterFailureReason.EmailAlreadyExists);
             }),
         );
     });
@@ -79,7 +82,7 @@ describe('Account Module', () => {
                 });
 
                 expect(result).toHaveProperty('event', LoginResponseEvents.LoginFailure);
-                expect(result).toHaveProperty('data.reason');
+                expect(result).toHaveProperty('data', LoginFailureReason.WrongEmailPasswordCombination);
             }),
         );
 
@@ -95,7 +98,7 @@ describe('Account Module', () => {
                 });
 
                 expect(result).toHaveProperty('event', LoginResponseEvents.LoginFailure);
-                expect(result).toHaveProperty('data.reason');
+                expect(result).toHaveProperty('data', LoginFailureReason.WrongEmailPasswordCombination);
             }),
         );
     });
