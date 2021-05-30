@@ -9,11 +9,14 @@ import { Account, AccountCollection } from '../../../shared/common/models/accoun
 import { LoginDto } from '../../../shared/types/auth/login.dto';
 import { Collection } from 'mongodb';
 import { RegisterFailure } from '../responses/register.response';
+import { LoginFailure } from '../responses/login.response';
 
 @Injectable()
 export class AccountService {
-    collection: Collection<Account>;
-    constructor(@Inject(DatabaseConnectionToken) private dbConnection: DatabaseConnection) {
+    private collection: Collection<Account>;
+    private defaultLoginFailure = new LoginFailure({ reason: 'Invalid email and password combination.' });
+
+    constructor(@Inject(DatabaseConnectionToken) dbConnection: DatabaseConnection) {
         this.collection = dbConnection.collection<Account>(AccountCollection);
     }
 
@@ -36,11 +39,14 @@ export class AccountService {
         await this.collection.insertOne(account);
     }
 
-    async login(loginDto: LoginDto): Promise<boolean> {
+    async login(loginDto: LoginDto): Promise<void> {
         const referencedAccount = await this.collection.findOne({ email: loginDto.email });
         if (!referencedAccount) {
-            return false;
+            throw this.defaultLoginFailure;
         }
-        return referencedAccount.password === loginDto.password;
+
+        if (referencedAccount.password !== loginDto.password) {
+            throw this.defaultLoginFailure;
+        }
     }
 }
