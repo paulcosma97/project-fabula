@@ -14,23 +14,26 @@ describe('Account Module', () => {
     const metadata = { imports: [AccountModule] };
 
     describe('Register', () => {
-        it.concurrent(
+        it(
             'Should succeed',
-            usingApp(metadata, async (app) => {
+            usingApp(metadata, async (app, assertPerformance) => {
                 const accountGateway: DemistifyGateway<AccountGateway> = app.get(AccountGateway);
-                const result = await accountGateway.register({
-                    email: 'test@test.com',
-                    password: 'password',
-                });
+
+                const result = await assertPerformance(() =>
+                    accountGateway.register({
+                        email: 'test@test.com',
+                        password: 'password',
+                    }),
+                );
 
                 expect(result).toHaveProperty('event', RegisterResponseEvents.RegisterSuccess);
                 expect(result).not.toHaveProperty('data');
             }),
         );
 
-        it.concurrent(
+        it(
             'Should fail when email already exists',
-            usingApp(metadata, async (app) => {
+            usingApp(metadata, async (app, assertPerformance) => {
                 const accountGateway: DemistifyGateway<AccountGateway> = app.get(AccountGateway);
 
                 await accountGateway.register({
@@ -38,10 +41,12 @@ describe('Account Module', () => {
                     password: 'password',
                 });
 
-                const result = await accountGateway.register({
-                    email: 'test@test.com',
-                    password: 'password',
-                });
+                const result = await assertPerformance(() =>
+                    accountGateway.register({
+                        email: 'test@test.com',
+                        password: 'password',
+                    }),
+                );
 
                 expect(result).toHaveProperty('event', RegisterResponseEvents.RegisterFailure);
                 expect(result).toHaveProperty('data', RegisterFailureReason.EmailAlreadyExists);
@@ -56,46 +61,52 @@ describe('Account Module', () => {
             });
         };
 
-        it.concurrent(
+        it(
             'Should succeed',
-            usingApp(metadata, async (app) => {
+            usingApp(metadata, async (app, assertPerformance) => {
                 await setupDatabase(app);
                 const accountGateway: DemistifyGateway<AccountGateway> = app.get(AccountGateway);
-                const result = await accountGateway.login({
-                    email: 'player@fabula.io',
-                    password: 'password',
-                });
+                const result = await assertPerformance(() =>
+                    accountGateway.login({
+                        email: 'player@fabula.io',
+                        password: 'password',
+                    }),
+                );
 
                 expect(result).toHaveProperty('event', LoginResponseEvents.LoginSuccess);
                 expect(result).not.toHaveProperty('data');
             }),
         );
 
-        it.concurrent(
+        it(
             'Should fail when email does not exist',
-            usingApp(metadata, async (app) => {
+            usingApp(metadata, async (app, assertPerformance) => {
                 const accountGateway: DemistifyGateway<AccountGateway> = app.get(AccountGateway);
 
-                const result = await accountGateway.login({
-                    email: 'unregistered@fabula.io',
-                    password: 'password',
-                });
+                const result = await assertPerformance(() =>
+                    accountGateway.login({
+                        email: 'unregistered@fabula.io',
+                        password: 'password',
+                    }),
+                );
 
                 expect(result).toHaveProperty('event', LoginResponseEvents.LoginFailure);
                 expect(result).toHaveProperty('data', LoginFailureReason.WrongEmailPasswordCombination);
             }),
         );
 
-        it.concurrent(
+        it(
             'Should fail when password is wrong',
-            usingApp(metadata, async (app) => {
+            usingApp(metadata, async (app, assertPerformance) => {
                 await setupDatabase(app);
                 const accountGateway: DemistifyGateway<AccountGateway> = app.get(AccountGateway);
 
-                const result = await accountGateway.login({
-                    email: 'player@fabula.io',
-                    password: 'passw0rd',
-                });
+                const result = await assertPerformance(() =>
+                    accountGateway.login({
+                        email: 'player@fabula.io',
+                        password: 'passw0rd',
+                    }),
+                );
 
                 expect(result).toHaveProperty('event', LoginResponseEvents.LoginFailure);
                 expect(result).toHaveProperty('data', LoginFailureReason.WrongEmailPasswordCombination);
